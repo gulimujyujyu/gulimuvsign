@@ -1,8 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="b977e7a0-4d0f-4b60-b25a-58982a2b1ee2" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+    <list default="true" id="b977e7a0-4d0f-4b60-b25a-58982a2b1ee2" name="Default" comment="modified workspace on thinkpad">
+      <change type="DELETED" beforePath="E:\Gulimujyujyu\gulimuvsign\.idea\.name" afterPath="" />
+      <change type="DELETED" beforePath="E:\Gulimujyujyu\gulimuvsign\.idea\codeStyleSettings.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Gulimujyujyu\gulimuvsign\.idea\encodings.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Gulimujyujyu\gulimuvsign\.idea\gulimuvsign.iml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Gulimujyujyu\gulimuvsign\.idea\inspectionProfiles\profiles_settings.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Gulimujyujyu\gulimuvsign\.idea\libraries\Google_App_Engine_SDK.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Gulimujyujyu\gulimuvsign\.idea\misc.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Gulimujyujyu\gulimuvsign\.idea\modules.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Gulimujyujyu\gulimuvsign\.idea\scopes\scope_settings.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Gulimujyujyu\gulimuvsign\.idea\vcs.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Gulimujyujyu\gulimuvsign\.idea\workspace.xml" afterPath="" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gitignore" afterPath="$PROJECT_DIR$/.gitignore" />
     </list>
     <ignored path="gulimuvsign.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -48,7 +59,7 @@
       <file leaf-file-name=".gitignore" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/.gitignore">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+            <state line="0" column="7" selection-start="7" selection-end="7" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -371,7 +382,11 @@
       <created>1334495547610</created>
       <updated>1334495547610</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="modified workspace on thinkpad">
+      <created>1334495574304</created>
+      <updated>1334495574304</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TodoView" selected-index="3">
@@ -546,7 +561,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/.gitignore">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+        <state line="0" column="7" selection-start="7" selection-end="7" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
