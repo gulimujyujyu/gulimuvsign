@@ -1,11 +1,17 @@
+# django settings
 import os
 os.environ['DJANGO_SETTINGS_MODULE'] = 'settings'
 
+# gae routines
 import webapp2
 from django.template import loader as django_loader
 from django.template import Template
 
+# google routines
 from google.appengine.api import users
+
+# db routines
+from data import image_model
 
 class MainPage(webapp2.RequestHandler):
     def get(self):
