@@ -18,6 +18,7 @@ class MainPage(webapp2.RequestHandler):
             user_url = users.create_login_url(self.request.uri)
             user_is_logged_in = False
 
+        #hello
         template_values = {
             'user_url': user_url,
             'user_is_logged_in': user_is_logged_in,
