@@ -8,8 +8,16 @@ handlers:
 - url: /static
   static_dir: static
 
-- url: /.*
+- url: /
   script: main.app
+
+- url: /.*
+  script: Upload.upload.app
+  login: required
+
+- url: /serve*
+  script: Upload.upload.app
+  login: required
 
 libraries:
 - name: django

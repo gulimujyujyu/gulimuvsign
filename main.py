@@ -12,6 +12,7 @@ from google.appengine.api import users
 
 # db routines
 from data import image_model
+from Upload import upload
 
 class MainPage(webapp2.RequestHandler):
     def get(self):
