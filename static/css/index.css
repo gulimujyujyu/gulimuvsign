@@ -1,3 +1,11 @@
+div#central_map_widget{
+    padding: 8px;
+}
+
 div#central_map_canvas{
     height: 360px;
+}
+
+div#geo_search {
+    margin-left: 0px;
 }

@@ -58,30 +58,45 @@
           <a class="brand" href="#">Online Image Collection System</a>
           <div class="nav-collapse">
             <ul class="nav">
-              <li class="active"><a href="#">Home</a></li>
-              <li><a href="#about">About</a></li>
-              <li><a href="#contact">Contact</a></li>
+              <li class="active"><a href="#"><i class="icon-home icon-white"></i>Home</a></li>
+              <li><a href="/explore"><i class="icon-th-large icon-white"></i>Explore</a></li>
+              <li><a href="#about"><i class="icon-question-sign icon-white"></i>About</a></li>
             </ul>
-            {% if user_is_logged_in %}
-              <p class="navbar-text pull-right">Welcome, {{user_obj}}. <a href={{user_url}}>Logout</a></p>
-            {% else %}
-              <p class="navbar-text pull-right"><a href={{user_url}}>Sign in</a></p>
-            {% endif %}
+
           </div><!--/.nav-collapse -->
+          <div class="nav-collapse">
+            {% if user_is_logged_in %}
+            <ul class="nav pull-right">
+              <li><p class="navbar-text">Welcome! {{user_obj}}. </p></li>
+              <li><a href="/account"><i class="icon-cog icon-white"></i>Account</a></li>
+              <li><a href={{user_url}}><i class="icon-off icon-white"></i>Logout</a></li>
+            </ul>
+            {% else %}
+            <ul class="nav pull-right">
+              <li><a href={{user_url}}>Sign in</a></li>
+            </ul>
+            {% endif %}
+          </div><!-- /.nav-collapse-->
         </div>
       </div>
     </div>
 
     <div id="body" class="container">
-
       <!-- map-->
-      <div class="row">
+      <div class="hero-unit" id="central_map_widget">
         <div id="central_map_canvas"></div>
       </div><!-- /map-->
 
-      <h1>Bootstrap starter template</h1>
-      <p>Use this document as a way to quick start any new project.<br> All you get is this message and a barebones HTML document.</p>
-      <p></p>
+      <!-- search -->
+      <div class="row" id="geo_search">
+        <form class="form-search" id="geo_search_form">
+          <span class="input-prepend"><span class="add-on"><i class="icon-search"></i></span><input type="text"
+                                                                                               class="span4"
+                                                                   placeholder="e.g. Hong Kong"></span>
+          <button type="submit" class="btn">Search around this place..</button>
+        </form>
+      </div><!-- /search -->
+
     </div> <!-- #body -->
 
   </body>
