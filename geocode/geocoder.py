@@ -24,7 +24,7 @@ def get_geocode(address, is_free=True):
             (u'sensor', u'false'),
         ], MAPS_KEY)
     tmp_cnt = urlfetch.fetch(url).content
-    logging.info(tmp_cnt)
+    #logging.info(tmp_cnt)
     response = simplejson.loads(tmp_cnt)
     if response['status'] == 'OVER_QUERY_LIMIT':
         raise OverQuotaError()

@@ -57,31 +57,23 @@ class MainPage(webapp2.RequestHandler):
 
             logging.info(results.__getitem__(0))
 
-            public_attrs = image_model.VSignImage.public_attributes()
 
-            results_obj = [
-            _merge_dicts({
-                'lat': image_result.location.lat,
-                'lng': image_result.location.lon,
-                'user':image_result.user,
-                'image_key':image_result.image_key},
-                dict([(attr, getattr(image_result, attr))
-                for attr in public_attrs]))
-            for image_result in results]
-
-            logging.info(results_obj)
             #simplejson.dumps({'results': results_obj})
 
             rslt=[]
-            for i in results_obj:
+            for i in results:
                 rslt.append({
-                    'lat': i['lat'],
-                    'lng': i['lng'],
-                    'user':i['user'],
-                    'image_key':i['image_key']})
-                logging.info(rslt)
+                    'lat': i.location.lat,
+                    'lng': i.location.lon,
+                    'user':{
+                        'name':i.user.user_id(),
+                        'email':i.user.email()
+                    },
+                    'image_key':"%s" % i.image_key.key()})
             ###
-            map_query = json.dump(rslt)
+            logging.info(rslt)
+            map_query = json.dumps(rslt)
+            logging.info(map_query)
             #map_query='a'
         else:
             map_query = None
@@ -92,7 +84,7 @@ class MainPage(webapp2.RequestHandler):
             'user_is_logged_in': user_is_logged_in,
             'user_obj': user,
             'map_center': result,
-            'map_result': map_query
+            'map_result': rslt
         }
 
         self.response.out.write(django_loader.render_to_string('main.html',template_values))

@@ -12,7 +12,7 @@ class VSignImage(GeoModel):
     @staticmethod
     def public_attributes():
     #Returns a set of simple attributes on entities."""
-        return [ 'user','image']
+        return [ 'user','image_key']
 
     def _get_latitude(self):
         return self.location.lat if self.location else None

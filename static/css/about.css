@@ -1,0 +1,12 @@
+div#upload_widget {
+    margin-left: 0px;
+}
+
+.thumbnail img {
+    height: 260px;
+    weight: 260px;
+}
+
+blockquote.pull-right {
+  border-right: 5px solid #FFF;
+}

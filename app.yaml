@@ -11,12 +11,23 @@ handlers:
 - url: /
   script: main.app
 
-- url: /.*
+- url: /upload.*
   script: Upload.upload.app
   login: required
 
-- url: /serve*
+- url: /serve.*
   script: Upload.upload.app
+  login: required
+
+- url: /explore.*
+  script: explore.explore.app
+  login: required
+
+- url: /about.*
+  script: about.about.app
+
+- url: /account.*
+  script: account.account.app
   login: required
 
 libraries:

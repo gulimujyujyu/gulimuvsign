@@ -75,7 +75,7 @@
           <a class="brand" href="#">Online Image Collection System</a>
           <div class="nav-collapse">
             <ul class="nav">
-              <li class="active"><a href="/"><i class="icon-home icon-white"></i>Home</a></li>
+              <li><a href="/"><i class="icon-home icon-white"></i>Home</a></li>
               <li><a href="/explore"><i class="icon-th-large icon-white"></i>Explore</a></li>
               <li><a href="/upload"><i class="icon-upload icon-white"></i>Upload</a></li>
               <li><a href="/about"><i class="icon-question-sign icon-white"></i>About</a></li>
@@ -86,7 +86,7 @@
             {% if user_is_logged_in %}
             <ul class="nav pull-right">
               <li><p class="navbar-text">Welcome! {{user_obj}}. </p></li>
-              <li><a href="/account"><i class="icon-cog icon-white"></i>Account</a></li>
+              <li class="active"><a href="/account"><i class="icon-cog icon-white"></i>Account</a></li>
               <li><a href={{user_url}}><i class="icon-off icon-white"></i>Logout</a></li>
             </ul>
             {% else %}
@@ -100,38 +100,8 @@
     </div>
 
     <div id="body" class="container">
-      <!-- map-->
-      <div class="hero-unit" id="central_map_widget">
-        <div id="central_map_canvas"></div>
-      </div><!-- /map-->
 
-      <!-- search -->
-      <div class="row" id="geo_search">
-        <form class="form-search" id="geo_search_form">
-          <span class="input-prepend"><span class="add-on"><i class="icon-search"></i></span><input type="text"
-                                                                                               class="span4"
-                                                                   placeholder="e.g. Hong Kong" id="place"
-                                                                   name="address"></span>
-          <input type="hidden" name="input_lat" id="input_lat">
-          <input type="hidden" name="input_lon" id="input_lon">
-          <button type="submit" class="btn">Search around this place..</button>
-        </form>
-      </div><!-- /search -->
 
-      {% if map_result %}
-      <!-- result -->
-      <div class="row" id="geo_search_result">
-        {% for item in map_result %}
-          <div class="row" index="{{ item.image_key }}">
-            <div class="span2">{{ item.user.user_id }}</div>
-            <div class="span2">{{ item.user.email }}</div>
-            <div class="span2">{{ item.lat }}</div>
-            <div class="span2">{{ item.lng }}</div>
-            <div class="span2"><img src="/serve/{{ item.image_key }}" alt="img" height="80"></div>
-          </div>
-        {% endfor %}
-      </div><!-- /result -->
-      {% endif %}
     </div> <!-- #body -->
 
   </body>
