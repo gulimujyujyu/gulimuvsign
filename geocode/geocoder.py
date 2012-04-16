@@ -4,7 +4,7 @@ import hashlib
 import hmac
 from google.appengine.api import urlfetch
 from google.appengine.runtime.apiproxy_errors import OverQuotaError
-import simplejson
+import json
 import urllib
 import base64
 import logging
@@ -25,7 +25,7 @@ def get_geocode(address, is_free=True):
         ], MAPS_KEY)
     tmp_cnt = urlfetch.fetch(url).content
     #logging.info(tmp_cnt)
-    response = simplejson.loads(tmp_cnt)
+    response = json.loads(tmp_cnt)
     if response['status'] == 'OVER_QUERY_LIMIT':
         raise OverQuotaError()
     elif response['status'] == 'ZERO_RESULTS':

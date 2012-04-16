@@ -54,10 +54,6 @@ class MainPage(webapp2.RequestHandler):
                 center,  # Or db.GeoPt
                 max_results=3,
                 max_distance=100000)  #m 80467==Within 50 miles.
-
-            logging.info(results.__getitem__(0))
-
-
             #simplejson.dumps({'results': results_obj})
 
             rslt=[]
@@ -77,6 +73,7 @@ class MainPage(webapp2.RequestHandler):
             #map_query='a'
         else:
             map_query = None
+            rslt = None
 
         #hello
         template_values = {
