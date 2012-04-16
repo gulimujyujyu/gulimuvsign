@@ -11,14 +11,16 @@ import urllib
 
 from google.appengine.ext import blobstore
 from google.appengine.ext.webapp import blobstore_handlers
+from google.appengine.ext import db
 from google.appengine.api.logservice import AppLog
 
 #ours
 from data import image_model
+import logging
 
 class MainHandler(webapp2.RequestHandler):
     def get(self):
-        upload_url = blobstore.create_upload_url('/upload_one')
+        upload_url = blobstore.create_upload_url('/upload_image')
         #AppLog.message("h")
         user = users.get_current_user()
         if user:
@@ -38,21 +40,57 @@ class MainHandler(webapp2.RequestHandler):
 
         self.response.out.write(django_loader.render_to_string('upload.html',template_values))
 
+    def post(self):
+        upload_url = blobstore.create_upload_url('/upload_image')
+        #AppLog.message("h")
+        user = users.get_current_user()
+        if user:
+            user_url = users.create_logout_url(self.request.uri)
+            user_is_logged_in = True
+        else:
+            user_url = users.create_login_url(self.request.uri)
+            user_is_logged_in = False
+
+        lon = self.request.get('input_lon');
+        lat = self.request.get('input_lat');
+        blobkey = self.request.get('image');
+
+        logging.info(lon)
+        logging.info(lat)
+
+        geo_info = db.GeoPt;
+        geo_info.lat = float(lat);
+        geo_info.lon = float(lon);
+        user = users.get_current_user()
+
+        new_vsignimage = image_model.VSignImage()
+        new_vsignimage.user = user
+        new_vsignimage.image = blobkey
+        logging.info(geo_info)
+        new_vsignimage.geo = "%s,%s" % (geo_info.lat, geo_info.lon)
+        new_vsignimage.put()
+
+        #hello
+        template_values = {
+            'user_url': user_url,
+            'user_is_logged_in': user_is_logged_in,
+            'user_obj': user,
+            'upload_url': upload_url,
+            'upload_is_successful': True
+        }
+
+        self.response.out.write(django_loader.render_to_string('upload.html',template_values))
+
 class UploadHandler(blobstore_handlers.BlobstoreUploadHandler):
     def post(self):
         #AppLog.message(self.request.uri)
 
-        upload_files = self.get_uploads('file')  # 'file' is file upload field in the form
-
-        user = users.get_current_user()
+        upload_files = self.get_uploads()  # 'file' is file upload field in the form
+        logging.info(upload_files)
         blob_info = upload_files[0]
 
-        new_vsignimage = image_model.VSignImage()
-        new_vsignimage.user = user
-        new_vsignimage.image = blob_info.key()
-        new_vsignimage.put()
-
-        self.redirect('/serve/%s' % blob_info.key())
+        self.response.out.write(blob_info.key())
+        #self.redirect('/serve/%s' % blob_info.key())
 
 class ServeHandler(blobstore_handlers.BlobstoreDownloadHandler):
     def get(self, resource):
@@ -65,7 +103,7 @@ class ServeHandler(blobstore_handlers.BlobstoreDownloadHandler):
 
 app = webapp2.WSGIApplication(
     [('/upload', MainHandler),
-        ('/upload_one', UploadHandler),
+        ('/upload_image', UploadHandler),
         ('/serve/([^/]+)?', ServeHandler),
     ], debug=True)
 

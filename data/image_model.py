@@ -7,4 +7,4 @@ class VSignImage(db.Model):
     user = db.UserProperty()
     image = blobstore.BlobReferenceProperty()
     #lalala = db.StringProperty()
-    #geo = db.GeoPtProperty() #TODO
+    geo = db.GeoPtProperty() #TODO
