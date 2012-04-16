@@ -77,14 +77,13 @@ $(document).ready(function(){
         $('div#image_upload_modal').modal('show');
     });
 
-    $('form#image_upload_form').submit(function(e){
-        alert('fire upload');
-        console.log('fire upload');
-        this.modal('hide');
-        return false;
-        //$.post('{{ upload_url }}', function(data) {
-        //  console.log(data);
-        //  $('input#image').val(data).show();
-        //});
-    })
+    $("a#change_a_new_image").click(function(){
+        console.log("button#upload_image is fired");
+        $('div#image_upload_modal').modal('show');
+    });
+
+    $("button#image_upload_form_cancel").click(function(){
+        $('div#image_upload_modal').modal('hide');
+    });
+
 });

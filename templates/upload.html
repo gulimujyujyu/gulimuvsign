@@ -103,10 +103,19 @@
       <div class="control-group">
         <label class="control-label">Select an Image to upload</label>
         <div class="controls">
-          <div class="input-append">
-            <input type="text" name="image"><button class="btn" type="button" id="upload_image">Select and Image</button>
-          </div>
+          {% if image_key %}
+          <p>Click below image to change a new one.</p>
+          <input type="hidden" name="image" id="image_key" value="{{ image_key }}">
+          <p>
+            <a id="change_a_new_image" href="#" class="thumbnail">
+              <img id="image" src="/serve/{{ image_key }}" alt="image" title="image">
+            </a>
+          </p>
+          {% else %}
+          <input type="hidden" name="image" id="image_key">
+          <button class="btn" type="button" id="upload_image">Select an Image</button>
           <p class="help-block">Please upload an image with v sign.</p>
+          {% endif %}
         </div>
       </div>
 
@@ -148,10 +157,13 @@
   <div id="image_upload_modal" class="modal">
   <form id="image_upload_form" class="form-horizontal" action='{{ upload_url }}' method=
       "POST" enctype="multipart/form-data">
-    <label>Choose an image:</label><input type="file" name="file">
-    <button type="submit" class="btn">Submit</button>
+    <label>Choose an image:</label><input type="file" name="file" id="file">
+    <button type="submit" class="btn btn-primary" id="image_upload_form_submit">Submit</button>
+    <button type="reset" class="btn">Reset</button>
+    <button type="reset" class="btn" id="image_upload_form_cancel">Cancel</button>
   </form>
   </div>
+
 
   {% endif %}
 

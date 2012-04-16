@@ -6,3 +6,15 @@ div#map_indicator {
     height: 128px;
     margin-left: 0px;
 }
+
+img#image {
+    height: 256px;
+}
+
+a#change_a_new_image {
+    float: left;
+}
+
+div#image_upload_modal {
+    padding: 30px;
+}

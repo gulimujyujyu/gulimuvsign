@@ -31,12 +31,15 @@ class MainHandler(webapp2.RequestHandler):
             user_url = users.create_login_url(self.request.uri)
             user_is_logged_in = False
 
+        image_key = self.request.get('blobkey')
+
         #hello
         template_values = {
             'user_url': user_url,
             'user_is_logged_in': user_is_logged_in,
             'user_obj': user,
             'upload_url': upload_url,
+            'image_key': image_key
         }
 
         self.response.out.write(django_loader.render_to_string('upload.html',template_values))
@@ -87,7 +90,7 @@ class UploadHandler(blobstore_handlers.BlobstoreUploadHandler):
         blob_info = upload_files[0]
 
         self.response.out.write(blob_info.key())
-        #self.redirect('/serve/%s' % blob_info.key())
+        self.redirect('/upload?blobkey=%s' % blob_info.key())
 
 class ServeHandler(blobstore_handlers.BlobstoreDownloadHandler):
     def get(self, resource):
