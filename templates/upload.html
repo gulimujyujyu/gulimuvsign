@@ -71,11 +71,11 @@
           <ul class="nav pull-right">
             <li><p class="navbar-text">Welcome! {{ user_obj }}. </p></li>
             <li><a href="/account"><i class="icon-cog icon-white"></i>Account</a></li>
-            <li><a href={{ user_url }}><i class="icon-off icon-white"></i>Logout</a></li>
+            <li><a href={{user_url}}><i class="icon-off icon-white"></i>Logout</a></li>
           </ul>
         {% else %}
           <ul class="nav pull-right">
-            <li><a href={{ user_url }}>Sign in</a></li>
+            <li><a href={{user_url}}>Sign in</a></li>
           </ul>
         {% endif %}
       </div>

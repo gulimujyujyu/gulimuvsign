@@ -56,22 +56,14 @@ class MainHandler(webapp2.RequestHandler):
         lat = self.request.get('input_lat');
         blobkey = self.request.get('image');
 
+        user = users.get_current_user()
         logging.info(lon)
         logging.info(lat)
-
         geo_info=geotypes.Point(float(lat),float(lon))
-        #geo_info = db.GeoPt;
-        #geo_info.lat = float(lat);
-        #geo_info.lon = float(lon);
-
-        user = users.get_current_user()
 
         new_vsignimage =image_model.VSignImage(location="%s,%s" % (geo_info.lat, geo_info.lon),user=user,image_key=blobkey)
-        #new_vsignimage.user = user
-        #new_vsignimage.image = blobkey
+
         logging.info(geo_info)
-        #new_vsignimage.geo = "%s,%s" % (geo_info.lat, geo_info.lon)
-        #new_vsignimage.put()
         new_vsignimage.update_location()
         new_vsignimage.put()
 
