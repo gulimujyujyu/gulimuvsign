@@ -17,7 +17,11 @@ from Upload import upload
 
 from geo import geotypes
 import logging
-from django.utils import simplejson
+import json
+
+def _merge_dicts(*args):
+    """Merges dictionaries right to left. Has side effects for each argument."""
+    return reduce(lambda d, s: d.update(s) or d, args)
 
 class MainPage(webapp2.RequestHandler):
     def get(self):
@@ -61,15 +65,24 @@ class MainPage(webapp2.RequestHandler):
                 'lng': image_result.location.lon,
                 'user':image_result.user,
                 'image_key':image_result.image_key},
-                dict([(attr, getattr(result, attr))
+                dict([(attr, getattr(image_result, attr))
                 for attr in public_attrs]))
             for image_result in results]
 
             logging.info(results_obj)
-            simplejson.dumps({'results': results_obj})
+            #simplejson.dumps({'results': results_obj})
 
+            rslt=[]
+            for i in results_obj:
+                rslt.append({
+                    'lat': i['lat'],
+                    'lng': i['lng'],
+                    'user':i['user'],
+                    'image_key':i['image_key']})
+                logging.info(rslt)
             ###
-            map_query = 'a'
+            map_query = json.dump(rslt)
+            #map_query='a'
         else:
             map_query = None
 
