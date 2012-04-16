@@ -18,6 +18,5 @@ var Globals = {
 };
 
 $(document).ready(function(){
-    //initial google map
-    var map = new google.maps.Map(document.getElementById("central_map_canvas"), Globals.central_map_options);
+
 });
