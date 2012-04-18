@@ -12,11 +12,15 @@ handlers:
   script: main.app
 
 - url: /upload.*
-  script: Upload.upload.app
+  script: upload.upload.app
+  login: required
+
+- url: /label.*
+  script: label.label.app
   login: required
 
 - url: /serve.*
-  script: Upload.upload.app
+  script: upload.upload.app
   login: required
 
 - url: /explore.*

@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Hello World</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <!-- Le styles -->
+    <link href="/static/css/bootstrap.css" rel="stylesheet">
+    <style>
+      body {
+        padding-top: 60px; /* 60px to make the container go all the way to the bottom of the topbar */
+      }
+    </style>
+    <link href="/static/css/bootstrap-responsive.css" rel="stylesheet">
+    <link href="/static/css/label.css" rel="stylesheet">
+
+    <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <!-- javascripts for index.html -->
+    <!-- Le javascript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="/static/js/jquery.js"></script>
+    <script src="/static/js/bootstrap-transition.js"></script>
+    <script src="/static/js/bootstrap-alert.js"></script>
+    <script src="/static/js/bootstrap-modal.js"></script>
+    <script src="/static/js/bootstrap-dropdown.js"></script>
+    <script src="/static/js/bootstrap-scrollspy.js"></script>
+    <script src="/static/js/bootstrap-tab.js"></script>
+    <script src="/static/js/bootstrap-tooltip.js"></script>
+    <script src="/static/js/bootstrap-popover.js"></script>
+    <script src="/static/js/bootstrap-button.js"></script>
+    <script src="/static/js/bootstrap-collapse.js"></script>
+    <script src="/static/js/bootstrap-carousel.js"></script>
+    <script src="/static/js/bootstrap-typeahead.js"></script>
+    <script type="text/javascript" src="/static/js/raphael-min.js"></script>
+    <script src="label.js"></script>
+  </head>
+
+  <body>
+
+    <div class="navbar navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container">
+          <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </a>
+          <a class="brand" href="#">Online Image Collection System</a>
+          <div class="nav-collapse">
+            <ul class="nav">
+              <li><a href="/"><i class="icon-home icon-white"></i>Home</a></li>
+              <li><a href="/explore"><i class="icon-th-large icon-white"></i>Explore</a></li>
+              <li><a href="/upload"><i class="icon-upload icon-white"></i>Upload</a></li>
+              <li class="active"><a href="/label"><i class="icon-flag icon-white"></i>Label</a></li>
+              <li><a href="/about"><i class="icon-question-sign icon-white"></i>About</a></li>
+            </ul>
+
+          </div><!--/.nav-collapse -->
+          <div class="nav-collapse">
+            {% if user_is_logged_in %}
+            <ul class="nav pull-right">
+              <li><p class="navbar-text">Welcome! {{user_obj}}. </p></li>
+              <li><a href="/account"><i class="icon-cog icon-white"></i>Account</a></li>
+              <li><a href={{user_url}}><i class="icon-off icon-white"></i>Logout</a></li>
+            </ul>
+            {% else %}
+            <ul class="nav pull-right">
+              <li><a href={{user_url}}>Sign in</a></li>
+            </ul>
+            {% endif %}
+          </div><!-- /.nav-collapse-->
+        </div>
+      </div>
+    </div>
+
+    <div id="body" class="container">
+      {% if image_left_key and image_right_key %}
+      <div class="row">
+        <form id="label_form" class="form-horizontal" method="POST">
+          <legend>Please help me to label two images :)</legend>
+          <div class="row">
+            <!-- Left image -->
+            <div class="span3 offset1">
+              <label>Drag rectangle below to set bounding box.</label>
+              <div class="thumbnail">
+                <!--<img id="img_left" class="image_to_be_labelled" src="/serve/{{ image_left_key }}">-->
+                <div id="img_left" class="image_to_be_labelled"></div>
+              </div>
+              <div class="control-group">
+                <label class="control-label">Left Image Key</label>
+                <div class="controls">
+                  <input type="text" name="image_left_key" value="{{ image_left_key }}">
+                </div>
+                <label class="control-label">Left Image Bounding Box</label>
+                <div class="controls">
+                  <input type="text" id="image_left_bb" name="image_left_bb" value="0|0|0|0">
+                </div>
+              </div>
+            </div>
+            <!-- Right image -->
+            <div class="span3 offset1">
+              <label>Drag rectangle below to set bounding box.</label>
+              <div class="thumbnail">
+                <!--<img id="img_right" class="image_to_be_labelled" src="/serve/{{ image_right_key }}">-->
+                <div id="img_right" class="image_to_be_labelled"></div>
+              </div>
+              <div class="control-group">
+                <label class="control-label">Right Image Key</label>
+                <div class="controls">
+                  <input type="text" name="image_right_key" value="{{ image_right_key }}">
+                </div>
+                <label class="control-label">Right Image Bounding Box</label>
+                <div class="controls">
+                  <input type="text" id="image_right_bb" name="image_right_bb" value="0|0|0|0">
+                </div>
+              </div>
+            </div>
+          </div>
+          <script type="text/javascript">
+            var il = Raphael("img_left");
+            var ir = Raphael("img_right");
+
+            var il_img = il.image("/serve/{{ image_left_key }}",0,0,261,200);
+            var ir_img = ir.image("/serve/{{ image_right_key }}",0,0,261,200);
+            var il_bb = il.rect(0,0,0,0);
+            var ir_bb = ir.rect(0,0,0,0);
+
+            var UpdateBBInput = function(ele,x,y,dx,dy) {
+              var x1 = x;
+              var x2 = x+dx;
+              var y1 = y;
+              var y2 = y+dy;
+              $(ele).val(x1+"|"+y1+"|"+x2+"|"+y2);
+            }
+
+            //TODO: BUGS, does not support up-left direction
+            il_img.drag(function(dx,dy,x,y){
+              il_bb.animate({width:dx,height:dy});
+            },function(x,y){
+              var vx = x - $("div#img_left svg image").offset().left;
+              var vy = y - $('div#img_left svg image').offset().top;
+              il_bb.attr({x: Math.round(vx),y: Math.round(vy)});
+            },function(){
+              il_bb.animate({fill:"#FF0000",opacity:0.5});
+              UpdateBBInput('input#image_left_bb',
+                  il_bb.attr('x'),
+                  il_bb.attr('y'),
+                  il_bb.attr('width'),
+                  il_bb.attr('height'));
+            });
+
+            ir_img.drag(function(dx,dy,x,y){
+              ir_bb.animate({width:dx,height:dy});
+            },function(x,y){
+              var vx = x - $("div#img_right svg image").offset().left;
+              var vy = y - $('div#img_right svg image').offset().top;
+              ir_bb.attr({x: Math.round(vx),y: Math.round(vy)});
+            },function(){
+              ir_bb.animate({fill:"#FF0000",opacity:0.5});
+              UpdateBBInput('input#image_right_bb',
+                  ir_bb.attr('x'),
+                  ir_bb.attr('y'),
+                  ir_bb.attr('width'),
+                  ir_bb.attr('height'));
+            });
+
+            il_bb.drag(function(dx,dy,x,y){
+              il_bb.attr({x:this.ox+dx,y:this.oy+dy});
+            },function(x,y){
+              this.ox = this.attr('x');
+              this.oy = this.attr('y');
+              il_bb.animate({fill:"#FF0000",opacity:0.8});
+            },function(){
+              il_bb.animate({fill:"#FF0000",opacity:0.5});
+              UpdateBBInput('input#image_left_bb',
+                  il_bb.attr('x'),
+                  il_bb.attr('y'),
+                  il_bb.attr('width'),
+                  il_bb.attr('height'));
+            });
+
+            ir_bb.drag(function(dx,dy,x,y){
+              ir_bb.attr({x:this.ox+dx,y:this.oy+dy});
+            },function(x,y){
+              this.ox = this.attr('x');
+              this.oy = this.attr('y');
+              ir_bb.animate({fill:"#FF0000",opacity:0.8});
+            },function(){
+              ir_bb.animate({fill:"#FF0000",opacity:0.5});
+              UpdateBBInput('input#image_right_bb',
+                  ir_bb.attr('x'),
+                  ir_bb.attr('y'),
+                  ir_bb.attr('width'),
+                  ir_bb.attr('height'));
+            });
+
+            /*
+            il_img.mousedown(function(e){
+              pts.il_ul.x = e.pageX - $("div#img_left svg image").offset().left;
+              pts.il_ul.y = e.pageY - $('div#img_left svg image').offset().top;
+              //il.text(50,50,"x: "+ e.pageX+",y: "+ e.pageY);
+              //il.text(50,75,"x: "+ e.layerX+",y: "+ e.layerY);
+              //il.text(50,100,"x: "+ e.clientX+",y: "+ e.clientY);
+              //il.text(100,125,"x: "+ pts.il_ul.x+",y: "+ pts.il_ul.y);
+              il_bb.animate({'x':pts.il_ul})
+            });
+            il_img.mouseup(function(e){
+              pts.il_br.x = e.pageX - $("div#img_left svg image").offset().left;
+              pts.il_br.y = e.pageY - $('div#img_left svg image').offset().top;
+
+            });
+            */
+          </script>
+
+
+
+
+          <div class="control-group">
+            <div class="form-actions">
+              <button type="submit" class="btn btn-primary">Done!</button>
+              <button type="reset" class="btn">Reset</button>
+              <!--<input type="submit" name="submit" value="Submit">-->
+            </div>
+          </div>
+        </form>
+      </div>
+      {% else %}
+      <div class="row">
+        <h1>Great! There is no images to label :)</h1>
+      </div>
+      {% endif %}
+
+    </div> <!-- #body -->
+
+  </body>
+</html>

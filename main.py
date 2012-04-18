@@ -13,7 +13,7 @@ from google.appengine.api import users
 # db routines
 from data import image_model
 from geocode import geocoder
-from Upload import upload
+from upload import upload
 
 from geo import geotypes
 import logging
