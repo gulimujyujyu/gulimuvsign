@@ -47,11 +47,13 @@ class MainPage(webapp2.RequestHandler):
         image_left = None
         image_right = None
 
-        if results.count() == 2:
+        logging.info(results.count())
+
+        if results.count() >= 2:
             image_left = results[0]
             image_right = results[1]
 
-        if results.count() == 2:
+        if results.count() >= 2:
             template_values.update( {'image_left_key': image_left.image_key.key()})
             template_values.update( {'image_right_key': image_right.image_key.key()})
 
