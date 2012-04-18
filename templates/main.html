@@ -51,12 +51,47 @@
               new google.maps.LatLng({{ map_center.geometry.location.lat }},
                   {{ map_center.geometry.location.lng }});
         {% endif %}
+        {% if zoom_level %}
+          Globals.central_map_options.zoom = {{ zoom_level }};
+        {% endif %}
         var map = new google.maps.Map(document.getElementById("central_map_canvas"), Globals.central_map_options);
         var geocoder = new google.maps.Geocoder();
+
+        //render google maps
+        var global_list = [];
+        var infowindows = [];
+        var marker_list = [];
+
+        {% if map_result %}
+          {% for item in map_result %}
+            global_list.push({
+              'user_id':"{{ item.user.user_id }}",
+              'email':"{{ item.user.email }}",
+              'lat':{{ item.lat }},
+              'lng':{{ item.lng }},
+              'image_key':"{{ item.image_key }}"});
+
+            marker_list.push(new google.maps.Marker({
+              map: map,
+              position: new google.maps.LatLng({{ item.lat }},{{ item.lng }}),
+              title: "{{ item.user.email }}"
+            }));
+
+            infowindows.push(new google.maps.InfoWindow({
+              position: new google.maps.LatLng({{ item.lat }},{{ item.lng }}),
+              content: '<div class="div_in_map"><img class="image_in_map" src="/serve/{{ item.image_key }}" /></div>'
+            }));
+
+            google.maps.event.addListener(marker_list[{{ forloop.counter0 }}], 'click', function() {
+              infowindows[{{ forloop.counter0 }}].open(map,marker_list[{{ forloop.counter0 }}]);
+            });
+          {% endfor %}
+        {% endif %}
 
         //form geo search
         $('form#geo_search_form').submit(function(e){
           var place = $('input#place').val();
+
         });
       });
     </script>
@@ -135,18 +170,6 @@
       {% endif %}
     </div> <!-- #body -->
 
-    <script type="text/javascript">
-      var global_list = [];
-      {% if map_result %}
-      {% for item in map_result %}
-      global_list.append({
-        'user_id':"{{ item.user.user_id }}",
-        'email':"{{ item.user.email }}",
-        'lat':{{ item.lat }},
-        'lng':{{ item.lng }},
-        'image_key':"{{ item.image_key }}"});
-      {% endfor %}
-      {% endif %}
-    </script>
+
   </body>
 </html>

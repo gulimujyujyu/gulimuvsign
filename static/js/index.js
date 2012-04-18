@@ -11,8 +11,8 @@ var Globals = {
     "version_major": 0,
     "version_minor": 1,
     "central_map_options": {
-        center: new google.maps.LatLng(-34.397, 150.644),
-        zoom: 8,
+        center: new google.maps.LatLng(10, 120),
+        zoom: 10,
         mapTypeId: google.maps.MapTypeId.ROADMAP
     }
 };

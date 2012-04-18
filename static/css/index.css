@@ -3,7 +3,7 @@ div#central_map_widget{
 }
 
 div#central_map_canvas{
-    height: 360px;
+    height: 480px;
 }
 
 div#geo_search {
@@ -12,4 +12,18 @@ div#geo_search {
 
 .row .span2 img {
     height: 80px;
+}
+
+img.image_in_map {
+    max-height: 200px;
+    max-width: 200px;
+}
+
+div.div_in_map {
+    max-height: 200px;
+    max-width: 200px;
+}
+
+div#geo_search_result{
+    display: none;
 }

@@ -38,8 +38,10 @@ class MainPage(webapp2.RequestHandler):
         address = self.request.get('address')
         if address:
             result = geocoder.get_geocode(address)
+            zoom_level = 2
         else:
             result = None
+            zoom_level = 2
 
         if result:
             ###
@@ -71,9 +73,25 @@ class MainPage(webapp2.RequestHandler):
             map_query = json.dumps(rslt)
             logging.info(map_query)
             #map_query='a'
+            zoom_level = 10
         else:
-            map_query = None
-            rslt = None
+            results = image_model.VSignImage.gql("LIMIT 10")
+
+            rslt=[]
+            for i in results:
+                rslt.append({
+                    'lat': i.location.lat,
+                    'lng': i.location.lon,
+                    'user':{
+                        'name':i.user.user_id(),
+                        'email':i.user.email()
+                    },
+                    'image_key':"%s" % i.image_key.key()})
+                ###
+            logging.info(rslt)
+            map_query = json.dumps(rslt)
+            logging.info(map_query)
+            zoom_level = 2
 
         #hello
         template_values = {
@@ -81,7 +99,8 @@ class MainPage(webapp2.RequestHandler):
             'user_is_logged_in': user_is_logged_in,
             'user_obj': user,
             'map_center': result,
-            'map_result': rslt
+            'map_result': rslt,
+            'zoom_level': zoom_level
         }
 
         self.response.out.write(django_loader.render_to_string('main.html',template_values))
