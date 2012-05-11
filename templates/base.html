@@ -121,30 +121,30 @@
 
         <div class="nav-collapse">
           <ul class="nav">
-            <li{% block nav_active_home %}{% endblock %}><a href="/"><i class="icon-home icon-white"></i>Home</a></li>
+            <li{% block nav_active_home %}{% endblock %}><a href="/"><i class="icon-home"></i>Home</a></li>
             <li class="dropdown" id="menu1">
               <a class="dropdown-toggle" data-toggle="dropdown" href="#menu1">
-                Give
+                <i class="icon-th"></i>Give
                 <b class="caret"></b>
               </a>
               <ul class="dropdown-menu">
-                <li{% block nav_active_upload %}{% endblock %}><a href="/upload"><i class="icon-upload icon-white"></i>Upload</a>
+                <li{% block nav_active_upload %}{% endblock %}><a href="/upload"><i class="icon-upload"></i>Upload</a>
                 </li>
-                <li{% block nav_active_label %}{% endblock %}><a href="/label"><i class="icon-flag icon-white"></i>Label</a>
+                <li{% block nav_active_label %}{% endblock %}><a href="/label"><i class="icon-flag"></i>Label</a>
                 </li>
               </ul>
             </li>
             <li class="dropdown" id="menu2">
               <a class="dropdown-toggle" data-toggle="dropdown" href="#menu2">
-                Get
+                <i class="icon-th-large"></i>Get
                 <b class="caret"></b>
               </a>
               <ul class="dropdown-menu">
-                <li{% block nav_active_explore %}{% endblock %}><a href="/explore"><i class="icon-th-large icon-white"></i>Explore</a>
+                <li{% block nav_active_explore %}{% endblock %}><a href="/explore"><i class="icon-eye-open"></i>Explore</a>
                 </li>
               </ul>
             </li>
-            <li{% block nav_active_about %}{% endblock %}><a href="/about"><i class="icon-question-sign icon-white"></i>About</a>
+            <li{% block nav_active_about %}{% endblock %}><a href="/about"><i class="icon-question-sign"></i>About</a>
             </li>
           </ul>
 
@@ -154,9 +154,9 @@
           {% if user_is_logged_in %}
             <ul class="nav pull-right">
               <li><p class="navbar-text">Welcome! {{ user_obj }}. </p></li>
-              <li{% block nav_active_account %}{% endblock %}><a href="/account"><i class="icon-cog icon-white"></i>Account</a>
+              <li{% block nav_active_account %}{% endblock %}><a href="/account"><i class="icon-user"></i>Account</a>
               </li>
-              <li><a href={{ user_url }}><i class="icon-off icon-white"></i>Logout</a></li>
+              <li><a href={{ user_url }}><i class="icon-off"></i>Logout</a></li>
             </ul>
           {% else %}
             <ul class="nav pull-right">
