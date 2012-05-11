@@ -1,125 +1,58 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <title>Hello World</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="">
-    <meta name="author" content="">
+{% extends "base.html" %}
 
-    <!-- Le styles -->
-    <link href="/static/css/bootstrap.css" rel="stylesheet">
-    <style>
-      body {
-        padding-top: 60px; /* 60px to make the container go all the way to the bottom of the topbar */
-      }
-    </style>
-    <link href="/static/css/bootstrap-responsive.css" rel="stylesheet">
-    <link href="/static/css/about.css" rel="stylesheet">
+{% block title %}About us{% endblock %}
 
-    <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
-    <!--[if lt IE 9]>
-      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
+{% block more_css_include %}
+  <link href="/static/css/about.css" rel="stylesheet">
+{% endblock %}
 
-    <!-- javascripts for index.html -->
-    <!-- Le javascript
-    ================================================== -->
-    <!-- Placed at the end of the document so the pages load faster -->
-    <script src="/static/js/jquery.js"></script>
-    <script src="/static/js/bootstrap-transition.js"></script>
-    <script src="/static/js/bootstrap-alert.js"></script>
-    <script src="/static/js/bootstrap-modal.js"></script>
-    <script src="/static/js/bootstrap-dropdown.js"></script>
-    <script src="/static/js/bootstrap-scrollspy.js"></script>
-    <script src="/static/js/bootstrap-tab.js"></script>
-    <script src="/static/js/bootstrap-tooltip.js"></script>
-    <script src="/static/js/bootstrap-popover.js"></script>
-    <script src="/static/js/bootstrap-button.js"></script>
-    <script src="/static/js/bootstrap-collapse.js"></script>
-    <script src="/static/js/bootstrap-carousel.js"></script>
-    <script src="/static/js/bootstrap-typeahead.js"></script>
-    <script
-        type="text/javascript"
-        src="http://maps.googleapis.com/maps/api/js?key=AIzaSyC9rD4Ly_NR2ltKQ92Ow4wivk-Wdm6va9U&sensor=true"></script>
+{% block more_js_include %}
+  <script
+      type="text/javascript"
+      src="http://maps.googleapis.com/maps/api/js?key=AIzaSyCuRR1BAAVFTyt1A4N7vSGZlA2DM8SXYDU&sensor=true"></script>
+{% endblock %}
 
-  </head>
+{% block nav_active_about %} class="active"{% endblock %}
 
-  <body>
 
-    <div class="navbar navbar-fixed-top">
-      <div class="navbar-inner">
-        <div class="container">
-          <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </a>
-          <a class="brand" href="#">Online Image Collection System</a>
-          <div class="nav-collapse">
-            <ul class="nav">
-              <li><a href="/"><i class="icon-home icon-white"></i>Home</a></li>
-              <li><a href="/explore"><i class="icon-th-large icon-white"></i>Explore</a></li>
-              <li><a href="/upload"><i class="icon-upload icon-white"></i>Upload</a></li>
-              <li><a href="/label"><i class="icon-flag icon-white"></i>Label</a></li>
-              <li class="active"><a href="/about"><i class="icon-question-sign icon-white"></i>About</a></li>
-            </ul>
+{% block body %}
+  <div id="body" class="container">
+    <div class="hero-unit">
+      <h1>About us</h1>
 
-          </div><!--/.nav-collapse -->
-          <div class="nav-collapse">
-            {% if user_is_logged_in %}
-            <ul class="nav pull-right">
-              <li><p class="navbar-text">Welcome! {{user_obj}}. </p></li>
-              <li><a href="/account"><i class="icon-cog icon-white"></i>Account</a></li>
-              <li><a href={{user_url}}><i class="icon-off icon-white"></i>Logout</a></li>
-            </ul>
-            {% else %}
-            <ul class="nav pull-right">
-              <li><a href={{user_url}}>Sign in</a></li>
-            </ul>
-            {% endif %}
-          </div><!-- /.nav-collapse-->
+      <div class="row">
+        <div class="span3 offset4">
+          <div class="thumbnail">
+            <img src="/static/img/xiaolongzhu.jpg" alt="Xiaolong">
+          </div>
+          <blockquote class="pull-right boy">
+            <p>My life is my message.</p>
+            <small>Xiaolong</small>
+          </blockquote>
+        </div>
+        <div class="span3">
+          <div class="thumbnail">
+            <img src="/static/img/xiaoyangli.jpg" alt="Xiaoyang">
+          </div>
+          <blockquote class="pull-right girl">
+            <p>Future.</p>
+            <small>Xiaoyang</small>
+          </blockquote>
+        </div>
+      </div>
+      <div class="row">
+        <div class="span3"><p>We apply 3-layered design to our project, and separate policy from mechanism
+          .</p>
+        </div>
+        <div class="span5  offset1">
+          <ul>
+            <li>Xiaoyang takes in charge of back-end development, e.g. designing data structure, database query, etc.
+            </li>
+            <li>Xiaolong takes in charge of front-end development and design.</li>
+          </ul>
         </div>
       </div>
     </div>
 
-    <div id="body" class="container">
-      <div class="hero-unit">
-        <h1>About us</h1>
-        <div class="row">
-          <div class="span3 offset4">
-            <div class="thumbnail">
-              <img src="/static/img/xiaolongzhu.jpg" alt="Xiaolong">
-            </div>
-            <blockquote class="pull-right">
-              <p>My life is my message.</p>
-              <small>Xiaolong</small>
-            </blockquote>
-          </div>
-          <div class="span3">
-            <div class="thumbnail">
-              <img src="/static/img/xiaoyangli.jpg" alt="Xiaoyang">
-            </div>
-            <blockquote class="pull-right">
-              <p>Future.</p>
-              <small>Xiaoyang</small>
-            </blockquote>
-          </div>
-        </div>
-        <div class="row">
-          <div class="span3"><p>We apply 3-layered design to our project, and separate policy from mechanism
-            .</p>
-          </div>
-          <div class="span5  offset1">
-            <ul>
-            <li>Xiaoyang takes in charge of back-end development, e.g. designing data structure, database query, etc.</li>
-            <li>Xiaolong takes in charge of front-end development and design.</li>
-            </ul>
-          </div>
-        </div>
-      </div>
-
-    </div> <!-- #body -->
-
-  </body>
-</html>
+  </div> <!-- #body -->
+{% endblock %}

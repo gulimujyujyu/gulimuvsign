@@ -1,160 +1,96 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <title>Hello World</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="">
-    <meta name="author" content="">
+{% extends "base.html" %}
 
-    <!-- Le styles -->
-    <link href="/static/css/bootstrap.css" rel="stylesheet">
-    <style>
-      body {
-        padding-top: 60px; /* 60px to make the container go all the way to the bottom of the topbar */
-      }
-    </style>
-    <link href="/static/css/bootstrap-responsive.css" rel="stylesheet">
-    <link href="/static/css/index.css" rel="stylesheet">
+{% block title %}Gulimujyujyu Vsign{% endblock %}
 
-    <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
-    <!--[if lt IE 9]>
-      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
+{% block more_css_include %}
+  <link href="/static/css/index.css" rel="stylesheet">
+{% endblock %}
 
-    <!-- javascripts for index.html -->
-    <!-- Le javascript
-    ================================================== -->
-    <!-- Placed at the end of the document so the pages load faster -->
-    <script src="/static/js/jquery.js"></script>
-    <script src="/static/js/bootstrap-transition.js"></script>
-    <script src="/static/js/bootstrap-alert.js"></script>
-    <script src="/static/js/bootstrap-modal.js"></script>
-    <script src="/static/js/bootstrap-dropdown.js"></script>
-    <script src="/static/js/bootstrap-scrollspy.js"></script>
-    <script src="/static/js/bootstrap-tab.js"></script>
-    <script src="/static/js/bootstrap-tooltip.js"></script>
-    <script src="/static/js/bootstrap-popover.js"></script>
-    <script src="/static/js/bootstrap-button.js"></script>
-    <script src="/static/js/bootstrap-collapse.js"></script>
-    <script src="/static/js/bootstrap-carousel.js"></script>
-    <script src="/static/js/bootstrap-typeahead.js"></script>
-    <script
-        type="text/javascript"
-        src="http://maps.googleapis.com/maps/api/js?key=AIzaSyC9rD4Ly_NR2ltKQ92Ow4wivk-Wdm6va9U&sensor=true"></script>
-    <script src="/static/js/index.js" type="text/javascript"></script>
-    <script type="text/javascript">
-      $(document).ready(function(){
-        //initial google map
-        {% if map_center %}
-          Globals.central_map_options.center =
-              new google.maps.LatLng({{ map_center.geometry.location.lat }},
-                  {{ map_center.geometry.location.lng }});
-        {% endif %}
-        {% if zoom_level %}
-          Globals.central_map_options.zoom = {{ zoom_level }};
-        {% endif %}
-        var map = new google.maps.Map(document.getElementById("central_map_canvas"), Globals.central_map_options);
-        var geocoder = new google.maps.Geocoder();
+{% block more_js_include %}
+  <script
+      type="text/javascript"
+      src="http://maps.googleapis.com/maps/api/js?key=AIzaSyCuRR1BAAVFTyt1A4N7vSGZlA2DM8SXYDU&sensor=true"></script>
+  <script src="/static/js/index.js" type="text/javascript"></script>
+  <script type="text/javascript">
+    $(document).ready(function () {
+      //initial google map
+      {% if map_center %}
+        Globals.central_map_options.center =
+            new google.maps.LatLng({{ map_center.geometry.location.lat }},
+                {{ map_center.geometry.location.lng }});
+      {% endif %}
+      {% if zoom_level %}
+        Globals.central_map_options.zoom = {{ zoom_level }};
+      {% endif %}
+      var map = new google.maps.Map(document.getElementById("central_map_canvas"), Globals.central_map_options);
+      var geocoder = new google.maps.Geocoder();
 
-        //render google maps
-        var global_list = [];
-        var infowindows = [];
-        var marker_list = [];
-
-        {% if map_result %}
-          {% for item in map_result %}
-            global_list.push({
-              'user_id':"{{ item.user.user_id }}",
-              'email':"{{ item.user.email }}",
-              'lat':{{ item.lat }},
-              'lng':{{ item.lng }},
-              'image_key':"{{ item.image_key }}"});
-
-            marker_list.push(new google.maps.Marker({
-              map: map,
-              position: new google.maps.LatLng({{ item.lat }},{{ item.lng }}),
-              title: "{{ item.user.email }}"
-            }));
-
-            infowindows.push(new google.maps.InfoWindow({
-              position: new google.maps.LatLng({{ item.lat }},{{ item.lng }}),
-              content: '<div class="div_in_map"><img class="image_in_map" src="/serve/{{ item.image_key }}" /></div>'
-            }));
-
-            google.maps.event.addListener(marker_list[{{ forloop.counter0 }}], 'click', function() {
-              infowindows[{{ forloop.counter0 }}].open(map,marker_list[{{ forloop.counter0 }}]);
-            });
-          {% endfor %}
-        {% endif %}
-
-        //form geo search
-        $('form#geo_search_form').submit(function(e){
-          var place = $('input#place').val();
-
-        });
-      });
-    </script>
-  </head>
-
-  <body>
-
-    <div class="navbar navbar-fixed-top">
-      <div class="navbar-inner">
-        <div class="container">
-          <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </a>
-          <a class="brand" href="#">Online Image Collection System</a>
-          <div class="nav-collapse">
-            <ul class="nav">
-              <li class="active"><a href="/"><i class="icon-home icon-white"></i>Home</a></li>
-              <li><a href="/explore"><i class="icon-th-large icon-white"></i>Explore</a></li>
-              <li><a href="/upload"><i class="icon-upload icon-white"></i>Upload</a></li>
-              <li><a href="/label"><i class="icon-flag icon-white"></i>Label</a></li>
-              <li><a href="/about"><i class="icon-question-sign icon-white"></i>About</a></li>
-            </ul>
-
-          </div><!--/.nav-collapse -->
-          <div class="nav-collapse">
-            {% if user_is_logged_in %}
-            <ul class="nav pull-right">
-              <li><p class="navbar-text">Welcome! {{user_obj}}. </p></li>
-              <li><a href="/account"><i class="icon-cog icon-white"></i>Account</a></li>
-              <li><a href={{user_url}}><i class="icon-off icon-white"></i>Logout</a></li>
-            </ul>
-            {% else %}
-            <ul class="nav pull-right">
-              <li><a href={{user_url}}>Sign in</a></li>
-            </ul>
-            {% endif %}
-          </div><!-- /.nav-collapse-->
-        </div>
-      </div>
-    </div>
-
-    <div id="body" class="container">
-      <!-- map-->
-      <div class="hero-unit" id="central_map_widget">
-        <div id="central_map_canvas"></div>
-      </div><!-- /map-->
-
-      <!-- search -->
-      <div class="row" id="geo_search">
-        <form class="form-search" id="geo_search_form">
-          <span class="input-prepend"><span class="add-on"><i class="icon-search"></i></span><input type="text"
-                                                                                               class="span4"
-                                                                   placeholder="e.g. Hong Kong" id="place"
-                                                                   name="address"></span>
-          <input type="hidden" name="input_lat" id="input_lat">
-          <input type="hidden" name="input_lon" id="input_lon">
-          <button type="submit" class="btn">Search around this place..</button>
-        </form>
-      </div><!-- /search -->
+      //render google maps
+      var global_list = [];
+      var infowindows = [];
+      var marker_list = [];
 
       {% if map_result %}
+        {% for item in map_result %}
+          global_list.push({
+            'user_id':"{{ item.user.user_id }}",
+            'email':"{{ item.user.email }}",
+            'lat':{{ item.lat }},
+            'lng':{{ item.lng }},
+            'image_key':"{{ item.image_key }}"});
+
+          marker_list.push(new google.maps.Marker({
+            map:map,
+            position:new google.maps.LatLng({{ item.lat }}, {{ item.lng }}),
+            title:"{{ item.user.email }}"
+          }));
+
+          infowindows.push(new google.maps.InfoWindow({
+            position:new google.maps.LatLng({{ item.lat }}, {{ item.lng }}),
+            content:'<div class="div_in_map"><img class="image_in_map" src="/serve/{{ item.image_key }}" /></div>'
+          }));
+
+          google.maps.event.addListener(marker_list[{{ forloop.counter0 }}], 'click', function () {
+            infowindows[{{ forloop.counter0 }}].open(map, marker_list[{{ forloop.counter0 }}]);
+          });
+        {% endfor %}
+      {% endif %}
+
+      //form geo search
+      $('form#geo_search_form').submit(function (e) {
+        var place = $('input#place').val();
+
+      });
+    });
+  </script>
+{% endblock %}
+
+{% block nav_active_home %} class="active"{% endblock %}
+
+{% block body %}
+  <div id="body" class="container">
+    <!-- map-->
+    <div class="hero-unit" id="central_map_widget">
+      <div id="central_map_canvas"></div>
+    </div>
+    <!-- /map-->
+
+    <!-- search -->
+    <div class="row" id="geo_search">
+      <form class="form-search" id="geo_search_form">
+          <span class="input-prepend"><span class="add-on"><i class="icon-search"></i></span><input type="text"
+                                                                                                    class="span4"
+                                                                                                    placeholder="e.g. Hong Kong"
+                                                                                                    id="place"
+                                                                                                    name="address"></span>
+        <input type="hidden" name="input_lat" id="input_lat">
+        <input type="hidden" name="input_lon" id="input_lon">
+        <button type="submit" class="btn">Search around this place..</button>
+      </form>
+    </div>
+    <!-- /search -->
+
+    {% if map_result %}
       <!-- result -->
       <div class="row" id="geo_search_result">
         {% for item in map_result %}
@@ -167,9 +103,7 @@
           </div>
         {% endfor %}
       </div><!-- /result -->
-      {% endif %}
-    </div> <!-- #body -->
+    {% endif %}
+  </div> <!-- #body -->
 
-
-  </body>
-</html>
+{% endblock %}

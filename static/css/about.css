@@ -7,6 +7,10 @@ div#upload_widget {
     weight: 260px;
 }
 
-blockquote.pull-right {
-  border-right: 5px solid #FFF;
+blockquote.boy{
+  border-right: 5px solid #E90B00;
+}
+
+blockquote.girl{
+    border-right: 5px solid #015094;
 }
